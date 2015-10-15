@@ -1,6 +1,7 @@
 package robot.objects;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+import robot.Game;
 import robot.enums.Actions;
 import robot.enums.Direction;
 import robot.interfaces.Movable;
@@ -14,15 +15,19 @@ import java.util.*;
  */
 public class Robot extends Cell implements Movable {
 
-    private Direction direction = Direction.NORTH;
     private Picture model;
+
+    private Position initPos = new Position(2,2,Game.getGrid());
+    private MovablePosition pos;
+    private Direction direction = Direction.NORTH;
 
     private Queue<Actions> moves;
     private int actionCounter;
-
-    private MovablePosition pos;
     private Timer timer;
 
+    public Robot() {
+        new Robot(new MovablePosition(initPos));
+    }
 
     public Robot(Position pos) {
         super(pos);
@@ -32,8 +37,8 @@ public class Robot extends Cell implements Movable {
         positionImage();
         draw();
 
-        System.out.println(pos);
         moves = new LinkedList<>();
+        start();
     }
 
     @Override
@@ -48,12 +53,11 @@ public class Robot extends Cell implements Movable {
         moves.add(Actions.MOVE);
     }
 
-    public void start()  {
+    private void start()  {
 
-        Thread thread = Thread.currentThread();
-        System.out.println(thread.getName());
         //WATCH OUT OMG. WORKAROUND HACK MUDAR DEPOIS CUIDADO!!!one!1
         //MUDAR PARA MULTITHREAD DPS
+
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
