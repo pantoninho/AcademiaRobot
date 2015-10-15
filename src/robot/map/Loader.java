@@ -37,8 +37,6 @@ public class Loader {
             e.printStackTrace();
         }
 
-        System.out.println(result.length());
-
         return result;
 
 
