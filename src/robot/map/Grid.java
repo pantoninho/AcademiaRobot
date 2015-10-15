@@ -1,10 +1,11 @@
 package robot.map;
 
+import robot.interfaces.Pickable;
 import robot.objects.Cell;
+import robot.objects.CellBuilder;
 import robot.objects.Wall;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by pedroantoninho on 14/10/15.
@@ -16,6 +17,7 @@ public class Grid {
     private int cellSize;
 
     private List<Cell> cells;
+    private Map<Character, String> cellTypes;
 
 
     public Grid(int width, int height, int cellSize) {
@@ -24,6 +26,7 @@ public class Grid {
         this.rows = height / cellSize;
         this.cellSize = cellSize;
 
+        makeCellMap();
         createCells();
         drawCells();
     }
@@ -40,6 +43,14 @@ public class Grid {
         return rows;
     }
 
+    private void makeCellMap() {
+        cellTypes = new HashMap<>();
+
+        cellTypes.put(' ', "Cell");
+        cellTypes.put('*', "Beans");
+        cellTypes.put('#', "Wall");
+    }
+
     private void createCells() {
 
         String loadedMap = Loader.loadMap();
@@ -50,12 +61,12 @@ public class Grid {
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                if (loadedMap.charAt(i) == ' ') {
-                    cells.add( new Cell(new Position(c,r,this)));
-                } else {
-                    cells.add( new Wall(new Position(c,r,this)));
-                }
-                i++;
+
+                char cellCh = loadedMap.charAt(i++);
+                Position pos = new Position(c,r,this);
+
+                Cell cell = new CellBuilder().setPos(pos).setType(cellCh).createCell();
+                cells.add(cell);
             }
         }
     }
@@ -65,5 +76,23 @@ public class Grid {
         for (Cell c : cells) {
             c.draw();
         }
+    }
+
+    public Pickable hasPickable(Position pos) {
+
+        Iterator<Cell> cellIter = cells.iterator();
+
+        while (cellIter.hasNext()) {
+            Cell obj = cellIter.next();
+
+            if (pos.equals(obj.getPos())) {
+                if (obj instanceof Pickable) {
+                    return (Pickable) obj;
+                }
+            }
+        }
+
+        System.out.println("There's no bean to pick here!");
+        return null;
     }
 }

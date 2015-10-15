@@ -24,6 +24,7 @@ public class Robot extends Cell implements Movable {
     private Queue<Actions> moves;
     private int actionCounter;
     private int pocketSize = 2;
+    private int beansInPocket = 0;
     private Timer timer;
 
     public Robot() {
@@ -111,10 +112,15 @@ public class Robot extends Cell implements Movable {
 
     private void pick() {
 
-        if (Game.hasPickable(pos) != null) {
-            if(pocketSize > 0){
-                Game.hasPickable(pos).pick();
-                pocketSize--;
+        if ( pos.getGrid().hasPickable(pos) != null) {
+
+            Pickable obj = pos.getGrid().hasPickable(pos);
+
+            if(beansInPocket > pocketSize){
+                obj.pick();
+                beansInPocket++;
+            } else {
+                System.out.println("You've got no space to pick another bean");
             }
         }
     }
