@@ -16,7 +16,7 @@ public class Wall extends Cell {
 
     @Override
     public void draw() {
-        ((Rectangle)object).setColor(Color.BLACK);
-        ((Rectangle)object).fill();
+        ((Rectangle) cell).setColor(Color.BLACK);
+        ((Rectangle) cell).fill();
     }
 }

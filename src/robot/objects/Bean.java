@@ -18,15 +18,13 @@ public class Bean extends Cell implements Pickable {
 
     @Override
     public void draw() {
-        ((Rectangle)object).setColor(Color.GRAY);
-        ((Rectangle)object).fill();
+        ((Rectangle) cell).setColor(Color.GRAY);
+        ((Rectangle) cell).fill();
     }
 
     @Override
     public void pick() {
         delete();
-
-
 
     }
 

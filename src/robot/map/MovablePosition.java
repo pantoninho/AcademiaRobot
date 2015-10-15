@@ -29,7 +29,7 @@ public class MovablePosition extends Position {
             row = getGrid().getRows() - 1;
         }
 
-        if(checkWall()){
+        if (checkWall()) {
             row++;
         }
 
@@ -44,7 +44,7 @@ public class MovablePosition extends Position {
             row = 0;
         }
 
-        if(checkWall()){
+        if (checkWall()) {
             row--;
         }
 
@@ -59,7 +59,7 @@ public class MovablePosition extends Position {
             col = getGrid().getCols() - 1;
         }
 
-        if(checkWall()){
+        if (checkWall()) {
             col++;
         }
         updateXY();
@@ -74,7 +74,7 @@ public class MovablePosition extends Position {
             col = 0;
         }
 
-        if(checkWall()){
+        if (checkWall()) {
             col--;
         }
         updateXY();
@@ -101,8 +101,10 @@ public class MovablePosition extends Position {
     private boolean checkWall() {
 
         for (Cell c : getGrid().getCells()) {
-            if (c instanceof Wall) {
-                if (c.getPos().getRow() == row && c.getPos().getCol() == col) {
+            if (c.hasObject()
+                    && (c.getObject()) instanceof Wall) {
+
+                if (c.getPos().equals(this)) {
                     return true;
                 }
             }

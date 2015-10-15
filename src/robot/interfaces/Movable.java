@@ -5,6 +5,8 @@ package robot.interfaces;
  */
 public interface Movable {
 
+    void makeMovable();
+
     public void turnLeft();
 
     public void moveForward();

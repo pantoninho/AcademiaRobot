@@ -10,8 +10,9 @@ import robot.map.Position;
  */
 public class Cell {
 
-    protected Position pos;
-    protected Shape object;
+    private Position pos;
+    protected Shape cell;
+    private Cell object = null;
     protected int cellSize;
 
 
@@ -22,27 +23,54 @@ public class Cell {
         this.pos = pos;
         cellSize = pos.getGrid().getCellSize();
 
-        createObject();
+        createCell();
     }
 
     public void draw() {
-        object.draw();
+        cell.draw();
+
+        if ( hasObject() ) {
+            object.draw();
+        }
     }
 
     public void delete() {
-        object.delete();
+        cell.delete();
     }
 
     public Position getPos() {
         return pos;
     }
 
-    public void createObject() {
+    public boolean hasObject() {
 
-        object = new Rectangle(pos.getX(),pos.getY(),cellSize,cellSize);
+        if (object != null) {
+            return true;
+        }
 
-        ((Rectangle)object).setColor(Color.BLACK);
+        return false;
     }
+
+    public Cell getObject() {
+        return object;
+    }
+
+    public void addObject(Cell object) {
+        this.object = object;
+        object.draw();
+    }
+
+    public void removeObject() {
+        object.delete();
+        object = null;
+    }
+
+    public void createCell() {
+
+        cell = new Rectangle(pos.getX(),pos.getY(),cellSize,cellSize);
+        ((Rectangle) cell).setColor(Color.BLACK);
+    }
+
 
 
 }

@@ -17,7 +17,6 @@ import java.util.*;
 public class Robot extends Cell implements Movable {
 
     private Picture model;
-
     private MovablePosition pos;
     private Direction direction = Direction.NORTH;
 
@@ -28,25 +27,29 @@ public class Robot extends Cell implements Movable {
     private Timer timer;
 
     public Robot() {
-        this(new Position(2, 2, Game.getGrid()));
+        this(new Position(1, 2, Game.getGrid()));
     }
 
     public Robot(Position pos) {
         super(pos);
-        this.pos = new MovablePosition(pos);
+        makeMovable();
+        moves = new LinkedList<>();
 
-        model = (Picture) object;
+        model = (Picture) cell;
         positionImage();
         draw();
 
-
-        moves = new LinkedList<>();
         start();
     }
 
     public void pickBean(){
         moves.add(Actions.PICK);
 
+    }
+
+    @Override
+    public void makeMovable() {
+        pos = new MovablePosition(getPos());
     }
 
     @Override
@@ -133,8 +136,8 @@ public class Robot extends Cell implements Movable {
     }
 
     @Override
-    public void createObject() {
-        object = new Picture(0,0,"resources/robot_NORTH.png");
+    public void createCell() {
+        cell = new Picture(0,0,"resources/robot_NORTH.png");
     }
 
     private class MoveLoop extends TimerTask {

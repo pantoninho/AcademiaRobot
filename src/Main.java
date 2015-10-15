@@ -19,6 +19,8 @@ public class Main {
         jose.moveForward();
         jose.moveForward();
         jose.moveForward();
+        jose.moveForward();
+        jose.moveForward();
         jose.pickBean();
         jose.turnLeft();
         jose.moveForward();

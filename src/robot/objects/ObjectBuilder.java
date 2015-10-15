@@ -7,13 +7,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CellBuilder {
+public class ObjectBuilder {
 
     private Position pos;
     private String type;
     private Map<Character, String> cellTypes;
 
-    public CellBuilder() {
+    public ObjectBuilder() {
         cellTypes = new HashMap<>();
 
         cellTypes.put(' ', "robot.objects.Cell");
@@ -22,19 +22,17 @@ public class CellBuilder {
 
     }
 
-    public CellBuilder setPos(Position pos) {
+    public ObjectBuilder setPos(Position pos) {
         this.pos = pos;
         return this;
     }
 
-    public CellBuilder setType(char ch) {
-
+    public ObjectBuilder setType(char ch) {
         type = cellTypes.get(ch);
         return this;
     }
 
-    public Cell createCell() {
-
+    public Cell createObject() {
 
         try {
 

@@ -2,8 +2,7 @@ package robot.map;
 
 import robot.interfaces.Pickable;
 import robot.objects.Cell;
-import robot.objects.CellBuilder;
-import robot.objects.Wall;
+import robot.objects.ObjectBuilder;
 
 import java.util.*;
 
@@ -27,6 +26,7 @@ public class Grid {
         this.cellSize = cellSize;
 
         createCells();
+        createObjects();
         drawCells();
     }
 
@@ -48,22 +48,34 @@ public class Grid {
 
     private void createCells() {
 
-        String loadedMap = Loader.loadMap();
-        int i = 0;
-
         cells = new ArrayList<>();
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
 
-                Position pos = new Position(c,r,this);
-                char cellCh = loadedMap.charAt(i++);
-
-                Cell cell = new CellBuilder().setPos(pos).setType(cellCh).createCell();
-                cells.add(cell);
-
+                Position pos = new Position(c, r, this);
+                cells.add(new Cell(pos));
             }
         }
+    }
+
+    private void createObjects() {
+
+        String loadedMap = Loader.loadMap();
+
+        for (int i = 0; i < loadedMap.length(); i++) {
+
+            if (loadedMap.charAt(i) != ' ') {
+                Cell object = new ObjectBuilder()
+                        .setPos(cells.get(i).getPos())
+                        .setType(loadedMap.charAt(i))
+                        .createObject();
+
+                cells.get(i).addObject(object);
+            }
+        }
+
+
     }
 
     private void drawCells() {
@@ -78,11 +90,14 @@ public class Grid {
         Iterator<Cell> cellIter = cells.iterator();
 
         while (cellIter.hasNext()) {
-            Cell obj = cellIter.next();
 
-            if (pos.equals(obj.getPos())) {
-                if (obj instanceof Pickable) {
-                    return (Pickable) obj;
+            Cell cell = cellIter.next();
+
+            if (pos.equals(cell.getPos())
+                    && cell.hasObject()) {
+
+                if (cell.getObject() instanceof Pickable) {
+                    return (Pickable) cell.getObject();
                 }
             }
         }
