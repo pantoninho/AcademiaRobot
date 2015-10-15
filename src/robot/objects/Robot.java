@@ -49,6 +49,17 @@ public class Robot extends Cell implements Movable {
     }
 
     public void start()  {
+
+        Thread thread = Thread.currentThread();
+        System.out.println(thread.getName());
+        //WATCH OUT OMG. WORKAROUND HACK MUDAR DEPOIS CUIDADO!!!one!1
+        //MUDAR PARA MULTITHREAD DPS
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         timer = new Timer();
         timer.schedule(new MoveLoop(), 0, 1000);
     }
