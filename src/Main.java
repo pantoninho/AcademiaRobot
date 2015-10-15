@@ -12,29 +12,15 @@ public class Main {
     public static void main(String[] args) {
 
         Grid grid = new Grid(500,500,75);
+        Robot robot = new Robot(new Position(0,0,grid));
         Bean newBean = new Bean(new Position(1,2,grid));
-        Robot robot = new Robot(new Position(4,2,grid));
-
-
-        robot.turnLeft();
-        robot.turnLeft();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.turnLeft();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
-        robot.moveForward();
 
         robot.start();
+
+        robot.turnLeft();
+        robot.moveForward();
+        robot.moveForward();
+        robot.moveForward();
 
 
     }

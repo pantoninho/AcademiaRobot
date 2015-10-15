@@ -7,10 +7,7 @@ import robot.interfaces.Movable;
 import robot.map.MovablePosition;
 import robot.map.Position;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by pedroantoninho on 14/10/15.
@@ -20,7 +17,7 @@ public class Robot extends Cell implements Movable {
     private Direction direction = Direction.NORTH;
     private Picture model;
 
-    private List<Actions> moves;
+    private Queue<Actions> moves;
     private int actionCounter;
 
     private MovablePosition pos;
@@ -52,7 +49,6 @@ public class Robot extends Cell implements Movable {
     }
 
     public void start()  {
-
         timer = new Timer();
         timer.schedule(new MoveLoop(), 0, 1000);
     }
@@ -92,7 +88,7 @@ public class Robot extends Cell implements Movable {
     }
 
     private void positionImage() {
-        model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
+        //model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
         model.translate(pos.getCol() * cellSize, pos.getRow() * cellSize);
     }
 
@@ -103,8 +99,6 @@ public class Robot extends Cell implements Movable {
 
     private class MoveLoop extends TimerTask {
 
-        private int index;
-
         public MoveLoop() {
 
         }
@@ -112,10 +106,13 @@ public class Robot extends Cell implements Movable {
         @Override
         public void run() {
 
-            System.out.println(moves.get(index));
+            if (moves.isEmpty()) {
+                return;
+            }
 
+            System.out.println(moves.peek());
 
-            switch (moves.get(index)) {
+            switch (moves.poll()) {
                 case MOVE:
                     move();
                     break;
@@ -124,12 +121,6 @@ public class Robot extends Cell implements Movable {
                     break;
             }
 
-
-            if(index < moves.size() - 1) {
-                index++;
-            } else {
-                timer.cancel();
-            }
         }
     }
 }
