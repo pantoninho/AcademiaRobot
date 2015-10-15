@@ -1,8 +1,9 @@
-package robot.map;
+package robot.objects;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
+import robot.map.Position;
 
 /**
  * Created by pedroantoninho on 14/10/15.
@@ -17,9 +18,9 @@ public class Cell {
     public Cell() {
     }
 
-    public Cell(Position pos, int cellSize) {
+    public Cell(Position pos) {
         this.pos = pos;
-        this.cellSize = cellSize;
+        cellSize = pos.getGrid().getCellSize();
 
         createObject();
     }
@@ -32,9 +33,13 @@ public class Cell {
         object.delete();
     }
 
+    public Position getPos() {
+        return pos;
+    }
+
     public void createObject() {
 
-        object = new Rectangle(pos.getCol()*cellSize,pos.getRow()*cellSize,cellSize,cellSize);
+        object = new Rectangle(pos.getX(),pos.getY(),cellSize,cellSize);
 
         ((Rectangle)object).setColor(Color.BLACK);
     }

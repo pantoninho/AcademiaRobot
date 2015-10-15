@@ -1,8 +1,9 @@
 package robot.objects;
 
-import robot.map.Grid;
-import robot.map.Cell;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+import robot.enums.Actions;
+import robot.enums.Direction;
+import robot.interfaces.Movable;
 import robot.map.MovablePosition;
 import robot.map.Position;
 
@@ -26,9 +27,9 @@ public class Robot extends Cell implements Movable {
     private Timer timer;
 
 
-    public Robot(Position pos, Grid grid) {
-        super(pos, grid.getCellSize());
-        this.pos = new MovablePosition(pos,grid);
+    public Robot(Position pos) {
+        super(pos);
+        this.pos = new MovablePosition(pos);
 
         model = (Picture) object;
         positionImage();
@@ -87,7 +88,7 @@ public class Robot extends Cell implements Movable {
         actionCounter++;
         System.out.println(pos);
         System.out.println(pos.dX() + " " + pos.dY());
-        model.translate(pos.dX(),pos.dY());
+        model.translate(pos.dX(), pos.dY());
     }
 
     private void positionImage() {

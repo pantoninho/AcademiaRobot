@@ -11,12 +11,9 @@ public class MovablePosition extends Position {
     private int x2;
     private int y2;
 
-    private Grid grid;
 
-    public MovablePosition(Position pos, Grid grid) {
-        super(pos.getCol(), pos.getRow());
-
-        this.grid = grid;
+    public MovablePosition(Position pos) {
+        super(pos.getCol(), pos.getRow(), pos.getGrid());
 
     }
 
@@ -25,7 +22,7 @@ public class MovablePosition extends Position {
         row--;
 
         if (row < 0) {
-            row = grid.getRows() - 1;
+            row = getGrid().getRows() - 1;
         }
         updateXY();
     }
@@ -34,7 +31,7 @@ public class MovablePosition extends Position {
         getXY();
         row++;
 
-        if (row > grid.getRows() - 1) {
+        if (row > getGrid().getRows() - 1) {
             row = 0;
         }
         updateXY();
@@ -45,7 +42,7 @@ public class MovablePosition extends Position {
         col--;
 
         if (col < 0) {
-            col = grid.getCols() - 1;
+            col = getGrid().getCols() - 1;
         }
         updateXY();
     }
@@ -54,7 +51,7 @@ public class MovablePosition extends Position {
         getXY();
         col++;
 
-        if (col > grid.getCols() - 1) {
+        if (col > getGrid().getCols() - 1) {
             col = 0;
         }
         updateXY();
@@ -69,13 +66,13 @@ public class MovablePosition extends Position {
     }
 
     private void getXY() {
-        x1 = col * grid.getCellSize();
-        y1 = row * grid.getCellSize();
+        x1 = getX();
+        y1 = getY();
     }
 
     private void updateXY() {
-        x2 = col * grid.getCellSize();
-        y2 = row * grid.getCellSize();
+        x2 = col * getGrid().getCellSize();
+        y2 = row * getGrid().getCellSize();
     }
 
 }

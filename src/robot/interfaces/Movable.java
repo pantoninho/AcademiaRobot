@@ -1,4 +1,4 @@
-package robot.objects;
+package robot.interfaces;
 
 /**
  * Created by pedroantoninho on 14/10/15.

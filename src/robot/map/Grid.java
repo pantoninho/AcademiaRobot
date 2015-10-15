@@ -1,5 +1,7 @@
 package robot.map;
 
+import robot.objects.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class Grid {
 
         for (int c = 0; c < cols; c++) {
             for (int r = 0; r < rows; r++) {
-                cells.add( new Cell(new Position(c,r),cellSize) );
+                cells.add( new Cell(new Position(c,r,this)));
             }
         }
     }
@@ -52,7 +54,6 @@ public class Grid {
 
         for (Cell c : cells) {
             c.draw();
-            System.out.println(c.pos);
         }
     }
 }

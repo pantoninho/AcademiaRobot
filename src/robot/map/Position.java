@@ -8,16 +8,15 @@ public class Position {
     protected int col;
     protected int row;
 
-    public Position(int col, int row) {
+    private Grid grid;
+
+    public Position(int col, int row, Grid grid) {
         this.col = col;
         this.row = row;
 
+        this.grid = grid;
     }
 
-
-    public Position getPos() {
-        return this;
-    }
 
     public int getCol() {
         return col;
@@ -25,6 +24,18 @@ public class Position {
 
     public int getRow() {
         return row;
+    }
+
+    public int getX() {
+        return col * grid.getCellSize();
+    }
+
+    public int getY() {
+        return row * grid.getCellSize();
+    }
+
+    public Grid getGrid() {
+        return grid;
     }
 
     @Override

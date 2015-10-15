@@ -1,8 +1,7 @@
 package robot.objects;
 
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import robot.map.Cell;
-import robot.map.Grid;
+import robot.interfaces.Pickable;
 import robot.map.Position;
 
 /**
@@ -11,8 +10,8 @@ import robot.map.Position;
 public class Bean extends Cell implements Pickable {
 
 
-    public Bean(Position pos, Grid grid) {
-        super(pos, grid.getCellSize());
+    public Bean(Position pos) {
+        super(pos);
 
         ((Rectangle)object).fill();
     }
