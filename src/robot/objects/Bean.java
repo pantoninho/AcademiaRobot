@@ -13,6 +13,10 @@ public class Bean extends Cell implements Pickable {
     public Bean(Position pos) {
         super(pos);
 
+    }
+
+    @Override
+    public void draw() {
         ((Rectangle)object).fill();
     }
 
