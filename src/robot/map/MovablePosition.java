@@ -17,6 +17,8 @@ public class MovablePosition extends Position {
 
     }
 
+
+
     public void moveUp() {
         getXY();
         row--;

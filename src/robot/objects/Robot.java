@@ -17,7 +17,6 @@ public class Robot extends Cell implements Movable {
 
     private Picture model;
 
-    private Position initPos = new Position(2,2,Game.getGrid());
     private MovablePosition pos;
     private Direction direction = Direction.NORTH;
 
@@ -26,7 +25,7 @@ public class Robot extends Cell implements Movable {
     private Timer timer;
 
     public Robot() {
-        new Robot(new MovablePosition(initPos));
+        this(new Position(2,2,Game.getGrid()));
     }
 
     public Robot(Position pos) {
@@ -37,8 +36,14 @@ public class Robot extends Cell implements Movable {
         positionImage();
         draw();
 
+
         moves = new LinkedList<>();
         start();
+    }
+
+    public void pickBean(){
+        moves.add(Actions.PICK);
+
     }
 
     @Override
@@ -52,6 +57,7 @@ public class Robot extends Cell implements Movable {
 
         moves.add(Actions.MOVE);
     }
+
 
     private void start()  {
 
@@ -98,8 +104,11 @@ public class Robot extends Cell implements Movable {
 
         actionCounter++;
         System.out.println(pos);
-        System.out.println(pos.dX() + " " + pos.dY());
         model.translate(pos.dX(), pos.dY());
+    }
+
+    private void pick() {
+        Game.hasPickable(pos);
     }
 
     private void positionImage() {
@@ -133,6 +142,9 @@ public class Robot extends Cell implements Movable {
                     break;
                 case TURN:
                     turn();
+                    break;
+                case PICK:
+                    pick();
                     break;
             }
 

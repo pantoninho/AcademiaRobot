@@ -18,6 +18,15 @@ public class Position {
     }
 
 
+
+    public boolean equals(Position pos) {
+
+        if(pos.getCol() == col && pos.getRow() == row){
+            return true;
+        }
+        return false;
+    }
+
     public int getCol() {
         return col;
     }
