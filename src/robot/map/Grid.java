@@ -17,7 +17,7 @@ public class Grid {
     private int cellSize;
 
     private List<Cell> cells;
-    private Map<Character, String> cellTypes;
+    private List<Cell> gameObjects;
 
 
     public Grid(int width, int height, int cellSize) {
@@ -26,7 +26,6 @@ public class Grid {
         this.rows = height / cellSize;
         this.cellSize = cellSize;
 
-        makeCellMap();
         createCells();
         drawCells();
     }
@@ -57,12 +56,12 @@ public class Grid {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
 
-                if (loadedMap.charAt(i) == ' ') {
-                    cells.add( new Cell(new Position(c,r,this)));
-                } else {
-                    cells.add( new Wall(new Position(c,r,this)));
-                }
-                i++;
+                Position pos = new Position(c,r,this);
+                char cellCh = loadedMap.charAt(i++);
+
+                Cell cell = new CellBuilder().setPos(pos).setType(cellCh).createCell();
+                cells.add(cell);
+
             }
         }
     }

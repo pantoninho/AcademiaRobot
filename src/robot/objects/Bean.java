@@ -24,8 +24,9 @@ public class Bean extends Cell implements Pickable {
 
     @Override
     public void pick() {
-
         delete();
+
+
 
     }
 

@@ -46,7 +46,6 @@ public class Robot extends Cell implements Movable {
 
     public void pickBean(){
         moves.add(Actions.PICK);
-        actionCounter++;
 
     }
 
@@ -57,8 +56,6 @@ public class Robot extends Cell implements Movable {
 
     @Override
     public void moveForward()  {
-        actionCounter++;
-
         moves.add(Actions.MOVE);
     }
 
@@ -107,16 +104,20 @@ public class Robot extends Cell implements Movable {
         }
 
         System.out.println(pos);
+
+        actionCounter++;
         model.translate(pos.dX(), pos.dY());
     }
 
     private void pick() {
 
+        actionCounter++;
+
         if ( pos.getGrid().hasPickable(pos) != null) {
 
             Pickable obj = pos.getGrid().hasPickable(pos);
 
-            if(beansInPocket > pocketSize){
+            if(beansInPocket < pocketSize){
                 obj.pick();
                 beansInPocket++;
             } else {

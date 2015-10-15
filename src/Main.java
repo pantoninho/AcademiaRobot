@@ -13,24 +13,20 @@ public class Main {
 
 
 
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
         jose.turnLeft();
         jose.turnLeft();
         jose.moveForward();
         jose.moveForward();
+        jose.moveForward();
+        jose.moveForward();
+        jose.pickBean();
         jose.turnLeft();
         jose.moveForward();
         jose.pickBean();
         jose.moveForward();
-        jose.turnLeft();
-        jose.turnLeft();
-        jose.turnLeft();
-        jose.moveForward();
+        jose.pickBean();
         jose.moveForward();
         jose.pickBean();
-        
+
     }
 }
