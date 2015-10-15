@@ -43,18 +43,13 @@ public class Grid {
         return rows;
     }
 
-    private void makeCellMap() {
-        cellTypes = new HashMap<>();
-
-        cellTypes.put(' ', "Cell");
-        cellTypes.put('*', "Beans");
-        cellTypes.put('#', "Wall");
+    public List<Cell> getCells() {
+        return cells;
     }
 
     private void createCells() {
 
         String loadedMap = Loader.loadMap();
-        System.out.println(loadedMap);
         int i = 0;
 
         cells = new ArrayList<>();
@@ -62,11 +57,12 @@ public class Grid {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
 
-                char cellCh = loadedMap.charAt(i++);
-                Position pos = new Position(c,r,this);
-
-                Cell cell = new CellBuilder().setPos(pos).setType(cellCh).createCell();
-                cells.add(cell);
+                if (loadedMap.charAt(i) == ' ') {
+                    cells.add( new Cell(new Position(c,r,this)));
+                } else {
+                    cells.add( new Wall(new Position(c,r,this)));
+                }
+                i++;
             }
         }
     }

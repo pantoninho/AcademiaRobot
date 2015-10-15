@@ -1,5 +1,8 @@
 package robot.map;
 
+import robot.objects.Cell;
+import robot.objects.Wall;
+
 /**
  * Created by pedroantoninho on 14/10/15.
  */
@@ -18,53 +21,71 @@ public class MovablePosition extends Position {
     }
 
 
-
     public void moveUp() {
         getXY();
-        row--;
 
+        row--;
         if (row < 0) {
             row = getGrid().getRows() - 1;
         }
+
+        if(checkWall()){
+            row++;
+        }
+
         updateXY();
     }
 
     public void moveDown() {
         getXY();
-        row++;
 
+        row++;
         if (row > getGrid().getRows() - 1) {
             row = 0;
         }
+
+        if(checkWall()){
+            row--;
+        }
+
         updateXY();
     }
 
     public void moveLeft() {
         getXY();
-        col--;
 
+        col--;
         if (col < 0) {
             col = getGrid().getCols() - 1;
         }
+
+        if(checkWall()){
+            col++;
+        }
         updateXY();
+
     }
 
     public void moveRight() {
         getXY();
-        col++;
 
+        col++;
         if (col > getGrid().getCols() - 1) {
             col = 0;
+        }
+
+        if(checkWall()){
+            col--;
         }
         updateXY();
     }
 
     public int dX() {
-        return x2-x1;
+        return x2 - x1;
     }
 
     public int dY() {
-        return y2-y1;
+        return y2 - y1;
     }
 
     private void getXY() {
@@ -77,4 +98,15 @@ public class MovablePosition extends Position {
         y2 = row * getGrid().getCellSize();
     }
 
+    private boolean checkWall() {
+
+        for (Cell c : getGrid().getCells()) {
+            if (c instanceof Wall) {
+                if (c.getPos().getRow() == row && c.getPos().getCol() == col) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
