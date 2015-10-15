@@ -1,16 +1,17 @@
-package robot.objects;
+package robot.map;
 
 /**
  * Created by pedroantoninho on 14/10/15.
  */
 public class Position {
 
-    private int col;
-    private int row;
+    protected int col;
+    protected int row;
 
     public Position(int col, int row) {
         this.col = col;
         this.row = row;
+
     }
 
 
@@ -24,5 +25,13 @@ public class Position {
 
     public int getRow() {
         return row;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "col=" + col +
+                ", row=" + row +
+                '}';
     }
 }

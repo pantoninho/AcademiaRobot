@@ -1,6 +1,5 @@
 package robot.map;
 
-import robot.objects.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
@@ -10,9 +9,9 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
  */
 public class Cell {
 
-    protected static int cellSize;
     protected Position pos;
     protected Shape object;
+    protected int cellSize;
 
 
     public Cell() {
@@ -25,11 +24,18 @@ public class Cell {
         createObject();
     }
 
+    public void draw() {
+        object.draw();
+    }
+
+    public void delete() {
+        object.delete();
+    }
+
     public void createObject() {
 
         object = new Rectangle(pos.getCol()*cellSize,pos.getRow()*cellSize,cellSize,cellSize);
-        ((Rectangle)object).setColor(Color.BLACK);
 
-        object.draw();
+        ((Rectangle)object).setColor(Color.BLACK);
     }
 }

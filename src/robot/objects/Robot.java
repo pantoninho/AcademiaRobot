@@ -2,7 +2,9 @@ package robot.objects;
 
 import robot.map.Grid;
 import robot.map.Cell;
-import org.academiadecodigo.simplegraphics.graphics.Picture;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+import robot.map.MovablePosition;
+import robot.map.Position;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.TimerTask;
 public class Robot extends Cell implements Movable {
 
     private Direction direction = Direction.NORTH;
-    private Picture object;
+    private Picture model;
 
     private List<Actions> moves;
     private int actionCounter;
@@ -26,22 +28,14 @@ public class Robot extends Cell implements Movable {
 
     public Robot(Position pos, Grid grid) {
         super(pos, grid.getCellSize());
-
-        object = (Picture) object;
         this.pos = new MovablePosition(pos,grid);
 
-        object.translate(pos.getCol()*cellSize,pos.getRow()*cellSize);
+        model = (Picture) object;
+        positionImage();
+        draw();
+
+        System.out.println(pos);
         moves = new LinkedList<>();
-    }
-
-
-    @Override
-    public void createObject() {
-
-        object = new Picture("resources/robot_NORTH.png");
-        object.grow((cellSize - object.getWidth()) / 2, (cellSize - object.getHeight()) / 2);
-        object.translate(-object.getX(), -object.getY());
-        object.draw();
     }
 
     @Override
@@ -56,6 +50,12 @@ public class Robot extends Cell implements Movable {
         moves.add(Actions.MOVE);
     }
 
+    public void start()  {
+
+        timer = new Timer();
+        timer.schedule(new MoveLoop(), 0, 1000);
+    }
+
     private void turn() {
 
         if (direction.ordinal() == Direction.values().length - 1) {
@@ -64,7 +64,7 @@ public class Robot extends Cell implements Movable {
             direction = Direction.values()[direction.ordinal()+1];
         }
 
-        object.load("resources/robot_" + direction.toString() + ".png");
+        model.load("resources/robot_" + direction.toString() + ".png");
     }
 
     private void move() {
@@ -84,13 +84,20 @@ public class Robot extends Cell implements Movable {
                 break;
         }
 
-        object.translate(pos.getX()-object.getX(), pos.getY()-object.getY());
+        actionCounter++;
+        System.out.println(pos);
+        System.out.println(pos.dX() + " " + pos.dY());
+        model.translate(pos.dX(),pos.dY());
     }
 
-    public void start()  {
+    private void positionImage() {
+        model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
+        model.translate(pos.getCol() * cellSize, pos.getRow() * cellSize);
+    }
 
-        timer = new Timer();
-        timer.schedule(new MoveLoop(), 0, 1000);
+    @Override
+    public void createObject() {
+        object = new Picture(0,0,"resources/robot_NORTH.png");
     }
 
     private class MoveLoop extends TimerTask {

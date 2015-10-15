@@ -1,16 +1,15 @@
-package robot.objects;
-
-import robot.map.Grid;
+package robot.map;
 
 /**
  * Created by pedroantoninho on 14/10/15.
  */
 public class MovablePosition extends Position {
 
-    private int col;
-    private int row;
-    private int x;
-    private int y;
+    private int x1;
+    private int y1;
+
+    private int x2;
+    private int y2;
 
     private Grid grid;
 
@@ -18,12 +17,11 @@ public class MovablePosition extends Position {
         super(pos.getCol(), pos.getRow());
 
         this.grid = grid;
-        this.x = pos.getCol() * grid.getCellSize();
-        this.y = pos.getRow() * grid.getCellSize();
 
     }
 
     public void moveUp() {
+        getXY();
         row--;
 
         if (row < 0) {
@@ -33,6 +31,7 @@ public class MovablePosition extends Position {
     }
 
     public void moveDown() {
+        getXY();
         row++;
 
         if (row > grid.getRows() - 1) {
@@ -42,6 +41,7 @@ public class MovablePosition extends Position {
     }
 
     public void moveLeft() {
+        getXY();
         col--;
 
         if (col < 0) {
@@ -51,6 +51,7 @@ public class MovablePosition extends Position {
     }
 
     public void moveRight() {
+        getXY();
         col++;
 
         if (col > grid.getCols() - 1) {
@@ -59,17 +60,22 @@ public class MovablePosition extends Position {
         updateXY();
     }
 
-    public int getY() {
-        return y;
+    public int dX() {
+        return x2-x1;
     }
 
-    public int getX() {
-        return x;
+    public int dY() {
+        return y2-y1;
+    }
+
+    private void getXY() {
+        x1 = col * grid.getCellSize();
+        y1 = row * grid.getCellSize();
     }
 
     private void updateXY() {
-        x = col * grid.getCellSize();
-        y = row * grid.getCellSize();
+        x2 = col * grid.getCellSize();
+        y2 = row * grid.getCellSize();
     }
 
 }

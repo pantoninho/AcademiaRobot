@@ -1,7 +1,5 @@
 package robot.map;
 
-import robot.objects.Position;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +22,7 @@ public class Grid {
         this.cellSize = cellSize;
 
         createCells();
+        drawCells();
     }
 
     public int getCellSize() {
@@ -40,14 +39,20 @@ public class Grid {
 
     private void createCells() {
 
-        cells = new ArrayList();
+        cells = new ArrayList<>();
 
         for (int c = 0; c < cols; c++) {
             for (int r = 0; r < rows; r++) {
-
                 cells.add( new Cell(new Position(c,r),cellSize) );
-
             }
+        }
+    }
+
+    private void drawCells() {
+
+        for (Cell c : cells) {
+            c.draw();
+            System.out.println(c.pos);
         }
     }
 }
