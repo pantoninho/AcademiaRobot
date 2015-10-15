@@ -29,28 +29,30 @@ public class Game {
         Bean firstBean = new Bean(new Position(3,3,grid));
         firstBean.draw();
 
+        Bean secondBean = new Bean(new Position(4,5,grid));
+        secondBean.draw();
+
+        beans.add(secondBean);
         beans.add(firstBean);
         return beans;
     }
 
-    public static boolean hasPickable(Position pos) {
+    public static Pickable hasPickable(Position pos) {
 
         Iterator<Cell> beanIter = beans.iterator();
 
         while (beanIter.hasNext()) {
             Cell obj = beanIter.next();
 
-            System.out.println(obj.getPos());
-
             if (pos.equals(obj.getPos()))  {
-                if (obj instanceof Pickable) {
-                    return true;
+                    if(obj instanceof Pickable) {
+                        return (Pickable)obj;
+                    }
                 }
-
             }
-        }
 
-        return false;
+        System.out.println("There's no bean to pick here!");
+        return null;
     }
 
 }

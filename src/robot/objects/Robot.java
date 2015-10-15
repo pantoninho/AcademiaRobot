@@ -5,6 +5,7 @@ import robot.Game;
 import robot.enums.Actions;
 import robot.enums.Direction;
 import robot.interfaces.Movable;
+import robot.interfaces.Pickable;
 import robot.map.MovablePosition;
 import robot.map.Position;
 
@@ -22,10 +23,11 @@ public class Robot extends Cell implements Movable {
 
     private Queue<Actions> moves;
     private int actionCounter;
+    private int pocketSize = 2;
     private Timer timer;
 
     public Robot() {
-        this(new Position(2,2,Game.getGrid()));
+        this(new Position(2, 2, Game.getGrid()));
     }
 
     public Robot(Position pos) {
@@ -43,6 +45,7 @@ public class Robot extends Cell implements Movable {
 
     public void pickBean(){
         moves.add(Actions.PICK);
+        actionCounter++;
 
     }
 
@@ -65,7 +68,7 @@ public class Robot extends Cell implements Movable {
         //MUDAR PARA MULTITHREAD DPS
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -102,13 +105,18 @@ public class Robot extends Cell implements Movable {
                 break;
         }
 
-        actionCounter++;
         System.out.println(pos);
         model.translate(pos.dX(), pos.dY());
     }
 
     private void pick() {
-        Game.hasPickable(pos);
+
+        if (Game.hasPickable(pos) != null) {
+            if(pocketSize > 0){
+                Game.hasPickable(pos).pick();
+                pocketSize--;
+            }
+        }
     }
 
     private void positionImage() {

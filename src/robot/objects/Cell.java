@@ -43,4 +43,6 @@ public class Cell {
 
         ((Rectangle)object).setColor(Color.BLACK);
     }
+
+
 }
