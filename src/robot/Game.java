@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Game {
 
-    private static Grid grid = new Grid(500,500,75);
+    private static Grid grid = new Grid(500,500,60);
     private static List<Cell> beans = createBeans();
 
 

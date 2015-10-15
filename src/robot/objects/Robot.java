@@ -120,7 +120,7 @@ public class Robot extends Cell implements Movable {
     }
 
     private void positionImage() {
-        //model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
+        model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
         model.translate(pos.getCol() * cellSize, pos.getRow() * cellSize);
     }
 

@@ -1,5 +1,6 @@
 package robot.objects;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import robot.interfaces.Pickable;
 import robot.map.Position;
@@ -17,6 +18,7 @@ public class Bean extends Cell implements Pickable {
 
     @Override
     public void draw() {
+        ((Rectangle)object).setColor(Color.GRAY);
         ((Rectangle)object).fill();
     }
 

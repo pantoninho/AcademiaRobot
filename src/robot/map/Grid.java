@@ -1,6 +1,7 @@
 package robot.map;
 
 import robot.objects.Cell;
+import robot.objects.Wall;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,20 @@ public class Grid {
 
     private void createCells() {
 
+        String loadedMap = Loader.loadMap();
+        System.out.println(loadedMap);
+        int i = 0;
+
         cells = new ArrayList<>();
 
-        for (int c = 0; c < cols; c++) {
-            for (int r = 0; r < rows; r++) {
-                cells.add( new Cell(new Position(c,r,this)));
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (loadedMap.charAt(i) == ' ') {
+                    cells.add( new Cell(new Position(c,r,this)));
+                } else {
+                    cells.add( new Wall(new Position(c,r,this)));
+                }
+                i++;
             }
         }
     }
