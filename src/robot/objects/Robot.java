@@ -1,5 +1,7 @@
 package robot.objects;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import robot.Game;
 import robot.enums.Actions;
@@ -26,6 +28,7 @@ public class Robot implements Movable {
     private int pocketSize = 2;
     private Deque<Pickable> pocket;
     private Timer timer;
+    private Text actions;
 
     public Robot() {
         this(new Position(3, 4, Game.getGrid()));
@@ -38,6 +41,10 @@ public class Robot implements Movable {
         moves = new LinkedList<>();
 
         pocket = new LinkedList<>();
+
+        actions = new Text(10,10,"Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
+        actions.setColor(Color.WHITE);
+        actions.draw();
 
         resizeImage();
         model.draw();
@@ -139,6 +146,8 @@ public class Robot implements Movable {
     }
 
     private void drop() {
+
+        actionCounter++;
         pos.getGrid()
                 .getCell(pos.getPos())
                 .dropPickable(pocket.pop());
@@ -152,8 +161,12 @@ public class Robot implements Movable {
         int xGrowFactor = (pos.getGrid().getCellSize() - model.getWidth())/2;
         int yGrowFactor = (pos.getGrid().getCellSize() - model.getHeight())/2;
 
-        model.grow(xGrowFactor,yGrowFactor);
+        model.grow(xGrowFactor, yGrowFactor);
         model.translate(xGrowFactor, yGrowFactor);
+    }
+
+    private void updateText(){
+        actions.setText("Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
     }
 
     private class MoveLoop extends TimerTask {
@@ -186,6 +199,7 @@ public class Robot implements Movable {
                     break;
             }
 
+            updateText();
         }
     }
 }
