@@ -42,9 +42,8 @@ public class Robot implements Movable {
 
         pocket = new LinkedList<>();
 
-        actions = new Text(10,10,"Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
-        actions.setColor(Color.WHITE);
-        actions.draw();
+        addText();
+
 
         resizeImage();
         model.draw();
@@ -157,10 +156,20 @@ public class Robot implements Movable {
         int xGrowFactor = (pos.getPos().getGrid().getCellSize() - model.getWidth())/2;
         int yGrowFactor = (pos.getPos().getGrid().getCellSize() - model.getHeight())/2;
 
-        model.grow(xGrowFactor,yGrowFactor);
+        model.grow(xGrowFactor, yGrowFactor);
         model.translate(xGrowFactor, yGrowFactor);
     }
 
+    private void addText() {
+
+        int gridHeight = pos.getPos().getGrid().getHeight();
+
+        actions = new Text(10, gridHeight + 10, "Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
+        actions.setColor(Color.BLACK);
+        actions.draw();
+
+
+    }
     private void updateText(){
         actions.setText("Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
     }

@@ -40,6 +40,14 @@ public class Grid {
         return rows;
     }
 
+    public int getWidth() {
+        return cols * cellSize;
+    }
+
+    public int getHeight() {
+        return rows * cellSize;
+    }
+
     public Cell getCell(Position pos) {
 
         int i = cols * pos.getRow() + pos.getCol();
