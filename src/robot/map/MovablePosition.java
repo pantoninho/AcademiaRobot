@@ -1,6 +1,5 @@
 package robot.map;
 
-import robot.objects.GameObject;
 import robot.objects.Wall;
 
 /**
@@ -17,7 +16,6 @@ public class MovablePosition extends Position {
         this.pos = pos;
         nextPos = new Position(pos.getCol(),pos.getRow(),pos.getGrid());
     }
-
 
     public void moveUp() {
         pos.match(nextPos);
@@ -78,7 +76,6 @@ public class MovablePosition extends Position {
     }
 
     public int dY() {
-        System.out.println(nextPos.getX() - pos.getX());
         return nextPos.getY() - pos.getY();
     }
 
@@ -93,7 +90,5 @@ public class MovablePosition extends Position {
         }
 
         return false;
-
-
     }
 }

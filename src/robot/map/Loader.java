@@ -10,35 +10,36 @@ import java.io.IOException;
  */
 public class Loader {
 
+    private static BufferedReader bReader;
 
 
-    public static String loadMap() {
-
-
+    public static void loadMap() {
         FileReader reader = null;
         try {
             reader = new FileReader("resources/map.txt");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("file not found");
         }
 
 
-        BufferedReader bReader = new BufferedReader(reader);
+        bReader = new BufferedReader(reader);
+    }
 
-        String line;
-        String result = "";
+    public static String loadLine() {
+
+        String line = null;
 
         try {
-            while((line = bReader.readLine()) != null) {
-                result += line + "\n";
+            if ((line = bReader.readLine()) == null) {
+                bReader.close();
+                return null;
             }
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return result;
 
-
+        return line;
     }
+
 }

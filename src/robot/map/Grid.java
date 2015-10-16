@@ -10,8 +10,8 @@ import java.util.*;
  */
 public class Grid {
 
-    private int cols;
-    private int rows;
+    private int cols = 0;
+    private int rows = 0;
     private int cellSize;
 
     private List<Cell> cells;
@@ -42,10 +42,12 @@ public class Grid {
     public Cell getCell(Position pos) {
 
         System.out.println("POS ASKED " + pos);
-        System.out.println("cols " + cols + "  row " + pos.getRow() + ". col " + pos.getCol());
+
+
         int i = cols * pos.getRow() + pos.getCol();
-        System.out.println("INDEX "+ i);
+        System.out.println("INDEX " + i);
         System.out.println("POS GIVEN " + cells.get(i).getPos());
+
         return cells.get(i);
     }
 
@@ -56,30 +58,29 @@ public class Grid {
     private void loadMap() {
         char ch;
         CellBuilder cb = new CellBuilder();
-        String loadedMap = Loader.loadMap();
+        String mapLine;
+        Loader.loadMap();
 
-        int i;
-        for (i = 0; i < loadedMap.length(); i++) {
+        while ((mapLine = Loader.loadLine()) != null) {
 
-            if ((ch = loadedMap.charAt(i)) == '\n') {
-                rows++;
-                cb.nextRow();
-                continue;
+            cols = mapLine.length();
+
+            for (int i = 0; i < cols; i++) {
+
+                Cell nextCell = cb.nextCell();
+                cells.add(nextCell);
+
+                if ((ch = mapLine.charAt(i)) != ' ') {
+                    GameObject obj = new ObjectBuilder()
+                            .setType(ch)
+                            .createObject();
+                    nextCell.addObject(obj);
+                }
             }
 
-            Cell nextCell = cb.nextCell();
-            cells.add(nextCell);
-
-            if (ch != ' ') {
-                GameObject obj = new ObjectBuilder()
-                        .setType(ch)
-                        .createObject();
-                nextCell.addObject(obj);
-            }
+            cb.nextRow();
+            rows++;
         }
-
-        rows++;
-        cols = (i / rows) + 1;
     }
 
     private void drawCells() {
@@ -101,7 +102,7 @@ public class Grid {
         private int row = 0;
 
         private Cell nextCell() {
-            Cell cell = new Cell(new Position(col,row,Grid.this));
+            Cell cell = new Cell(new Position(col, row, Grid.this));
             col++;
 
             return cell;
