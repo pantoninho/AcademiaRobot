@@ -66,7 +66,6 @@ public class Grid {
 
         while ((mapLine = Loader.loadLine()) != null) {
 
-            System.out.println(mapLine);
             cols = mapLine.length();
 
             for (int i = 0; i < cols; i++) {
@@ -75,7 +74,7 @@ public class Grid {
                 nextCell.draw();
                 cells.add(nextCell);
 
-                if ((ch = mapLine.charAt(i)) != ' ') {
+                if ((ch = mapLine.charAt(i)) != '_') {
                     if (ch == 'p') {
                         Robot robot = new Robot(new Position(i % cols, rows, this));
                     } else {

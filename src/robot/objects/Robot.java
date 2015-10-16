@@ -189,6 +189,7 @@ public class Robot implements Movable {
         public void run() {
 
             if (moves.isEmpty()) {
+                System.out.println("still moving");
                 return;
             }
 
@@ -212,6 +213,14 @@ public class Robot implements Movable {
                     drop();
                     updateText();
                     updateModel();
+
+                    if (pos.getPos().getCellOnGrid().getObject() instanceof Mark) {
+
+                        if (((Mark) pos.getPos().getCellOnGrid().getObject()).getJarCounter() == 3) {
+                            timer.cancel();
+                            System.out.println("GAME OVER. YOU WIN");
+                        }
+                    }
                     break;
             }
         }

@@ -8,41 +8,64 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Robot pilas = new Robot();
+        Robot domingosTheBoss = new Robot();
 
-        pilas.turnLeft();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.pickJar();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.moveForward();
-        pilas.pickJar();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.moveForward();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.turnLeft();
-        pilas.moveForward();
-        pilas.dropJar();
-        pilas.dropJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.pickJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.pickJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.dropJar();
+        domingosTheBoss.dropJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.pickJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.moveForward();
+        domingosTheBoss.dropJar();
+        domingosTheBoss.turnLeft();
+        domingosTheBoss.turnLeft();
+        System.out.println("# # # # # LOPO IS THE BOSS! # # # # #");
+
+
+
+
 
     }
 }

@@ -4,6 +4,7 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import robot.interfaces.Pickable;
 import robot.objects.GameObject;
+import robot.objects.Mark;
 
 import java.util.*;
 
@@ -75,16 +76,20 @@ public class Cell {
     public void drawObjects() {
 
         for (GameObject o : objects) {
-            System.out.println(o.getY());
             o.delete();
             o.draw();
         }
-
     }
 
     public void dropPickable(Pickable _obj) {
 
         GameObject obj = (GameObject) _obj;
+
+        if ((obj = pos.getCellOnGrid().getObject()) instanceof Mark) {
+            ((Mark)obj).incJarCounter();
+        }
+
+
         obj.createObject(pos);
         objects.add(obj);
 

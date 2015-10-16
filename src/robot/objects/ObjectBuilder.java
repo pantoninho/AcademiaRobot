@@ -19,6 +19,7 @@ public class ObjectBuilder {
 
         cellTypes.put('#', "robot.objects.Wall");
         cellTypes.put('*', "robot.objects.Jar");
+        cellTypes.put('x', "robot.objects.Mark");
 
     }
 
