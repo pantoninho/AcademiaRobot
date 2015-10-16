@@ -2,6 +2,7 @@ package robot.map;
 
 import robot.objects.GameObject;
 import robot.objects.ObjectBuilder;
+import robot.objects.Robot;
 
 import java.util.*;
 
@@ -41,13 +42,7 @@ public class Grid {
 
     public Cell getCell(Position pos) {
 
-        System.out.println("POS ASKED " + pos);
-
-
         int i = cols * pos.getRow() + pos.getCol();
-        System.out.println("INDEX " + i);
-        System.out.println("POS GIVEN " + cells.get(i).getPos());
-
         return cells.get(i);
     }
 
@@ -71,10 +66,14 @@ public class Grid {
                 cells.add(nextCell);
 
                 if ((ch = mapLine.charAt(i)) != ' ') {
-                    GameObject obj = new ObjectBuilder()
-                            .setType(ch)
-                            .createObject();
-                    nextCell.addObject(obj);
+                    if (ch == 'p') {
+                        Robot robot = new Robot(new Position(i % cols, rows, this));
+                    } else {
+                        GameObject obj = new ObjectBuilder()
+                                .setType(ch)
+                                .createObject();
+                        nextCell.addObject(obj);
+                    }
                 }
             }
 

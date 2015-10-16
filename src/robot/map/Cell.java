@@ -40,6 +40,12 @@ public class Cell {
         return pos;
     }
 
+    public void addObject(GameObject object) {
+
+        object.createObject(pos);
+        objects.push(object);
+    }
+
     public boolean hasObject() {
 
         if (objects.size() > 0) {
@@ -47,12 +53,6 @@ public class Cell {
         }
 
         return false;
-    }
-
-    public void addObject(GameObject object) {
-
-        object.createObject(pos);
-        objects.push(object);
     }
 
     public GameObject getObject() {
@@ -63,11 +63,15 @@ public class Cell {
         return objects.peek();
     }
 
-    public void pickObject() {
+    public Pickable pickObject() {
+
+        Pickable obj = null;
 
         if (hasObject() && getObject() instanceof Pickable) {
+            obj = (Pickable)objects.peek();
             objects.pop().delete();
         }
+        return obj;
     }
 
     public void drawObjects() {
@@ -75,6 +79,14 @@ public class Cell {
         for (GameObject o : objects) {
             o.draw();
         }
+    }
+
+    public void dropPickable(Pickable obj) {
+
+        GameObject thisObj = (GameObject) obj;
+        thisObj.createObject(pos);
+        thisObj.draw();
+        objects.push(thisObj);
     }
 
     public void createCell() {

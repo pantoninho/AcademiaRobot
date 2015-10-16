@@ -16,7 +16,7 @@ public class Main {
         jose.pickBean();
         jose.moveForward();
         jose.moveForward();
-        jose.moveForward();
+        jose.dropBean();
         jose.moveForward();
         jose.moveForward();
         jose.moveForward();

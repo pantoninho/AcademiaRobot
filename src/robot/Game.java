@@ -9,7 +9,6 @@ public class Game {
 
     private static Grid grid = new Grid(60);
 
-
     public static Grid getGrid() {
         return grid;
     }

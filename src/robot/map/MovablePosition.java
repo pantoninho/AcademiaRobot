@@ -5,20 +5,19 @@ import robot.objects.Wall;
 /**
  * Created by pedroantoninho on 14/10/15.
  */
-public class MovablePosition extends Position {
+public class MovablePosition {
 
     private Position pos;
     private Position nextPos;
+    private Grid grid;
 
     public MovablePosition(Position pos) {
-        super(pos.getCol(), pos.getRow(), pos.getGrid());
-
         this.pos = pos;
+        this.grid = pos.getGrid();
         nextPos = new Position(pos.getCol(),pos.getRow(),pos.getGrid());
     }
 
     public void moveUp() {
-        pos.match(nextPos);
 
         if (pos.getRow() > 0) {
             nextPos.previousRow();
@@ -26,23 +25,21 @@ public class MovablePosition extends Position {
             nextPos.mirrorHoriz();
         }
 
-        updatePos();
+        checkWall();
     }
 
     public void moveDown() {
-        pos.match(nextPos);
 
-        if (pos.getRow() < getGrid().getRows()) {
+        if (pos.getRow() < grid.getRows()) {
             nextPos.nextRow();
         } else {
             nextPos.mirrorHoriz();
         }
 
-        updatePos();
+        checkWall();
     }
 
     public void moveLeft() {
-        pos.match(nextPos);
 
         if (pos.getCol() > 0) {
             nextPos.previousCol();
@@ -50,25 +47,27 @@ public class MovablePosition extends Position {
             nextPos.mirrorVert();
         }
 
-        updatePos();
+        checkWall();
     }
 
     public void moveRight() {
-        pos.match(nextPos);
 
-        if (pos.getCol() < getGrid().getCols()) {
+        if (pos.getCol() < grid.getCols()) {
             nextPos.nextCol();
         } else {
             nextPos.mirrorVert();
         }
-
-        updatePos();
+        checkWall();
     }
 
-    private void updatePos() {
+    private void checkWall() {
         if (hasWall()) {
             nextPos.match(pos);
         }
+    }
+
+    public void update() {
+        pos.match(nextPos);
     }
 
     public int dX() {
@@ -79,9 +78,17 @@ public class MovablePosition extends Position {
         return nextPos.getY() - pos.getY();
     }
 
+    public Position getPos() {
+        return pos;
+    }
+
+    public Grid getGrid() {
+        return grid;
+    }
+
     private boolean hasWall() {
 
-        Cell nextCell = getGrid().getCell(nextPos);
+        Cell nextCell = nextPos.getGrid().getCell(nextPos);
 
         if (nextCell.hasObject()) {
            if (nextCell.getObject() instanceof Wall)  {

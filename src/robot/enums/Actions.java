@@ -6,5 +6,6 @@ package robot.enums;
 public enum Actions {
     MOVE,
     TURN,
-    PICK
+    PICK,
+    DROP
 }

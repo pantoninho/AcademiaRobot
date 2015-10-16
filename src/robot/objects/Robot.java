@@ -24,7 +24,7 @@ public class Robot implements Movable {
     private Queue<Actions> moves;
     private int actionCounter;
     private int pocketSize = 2;
-    private int beansInPocket = 0;
+    private Deque<Pickable> pocket;
     private Timer timer;
 
     public Robot() {
@@ -37,15 +37,14 @@ public class Robot implements Movable {
         makeMovable(pos);
         moves = new LinkedList<>();
 
+        pocket = new LinkedList<>();
+
         resizeImage();
         model.draw();
-
         start();
     }
 
-    public void pickBean(){
-        moves.add(Actions.PICK);
-    }
+
 
     @Override
     public void makeMovable(Position pos) {
@@ -62,6 +61,13 @@ public class Robot implements Movable {
         moves.add(Actions.MOVE);
     }
 
+    public void pickBean(){
+        moves.add(Actions.PICK);
+    }
+
+    public void dropBean() {
+        moves.add(Actions.DROP);
+    }
 
     private void start()  {
 
@@ -106,26 +112,39 @@ public class Robot implements Movable {
                 break;
         }
 
+        System.out.println("MOVING TO " + pos);
+
         actionCounter++;
         model.translate(pos.dX(), pos.dY());
+        pos.update();
     }
 
     private void pick() {
 
         actionCounter++;
-        Cell cell = pos.getGrid().getCell(pos);
+        Cell cell = pos.getGrid().getCell(pos.getPos());
         Pickable obj;
 
         if ( cell.hasObject() &&
                 cell.getObject() instanceof Pickable) {
 
-            if(beansInPocket < pocketSize){
-                cell.pickObject();
-                beansInPocket++;
+            if(pocket.size() < pocketSize){
+                pocket.push(cell.pickObject());
             } else {
                 System.out.println("You've got no space to pick another bean");
             }
+        } else {
+            System.out.println("There isn't a pickable object in this cell");
         }
+    }
+
+    private void drop() {
+        pos.getGrid()
+                .getCell(pos.getPos())
+                .dropPickable(pocket.pop());
+        model.delete();
+        resizeImage();
+        model.draw();
     }
 
     private void resizeImage() {
@@ -161,6 +180,9 @@ public class Robot implements Movable {
                     break;
                 case PICK:
                     pick();
+                    break;
+                case DROP:
+                    drop();
                     break;
             }
 
