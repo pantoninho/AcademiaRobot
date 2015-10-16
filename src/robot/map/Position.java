@@ -64,6 +64,18 @@ public class Position {
         col = grid.getCols()-1 - col;
     }
 
+    public int randomizeX() {
+        int randomX = getX() +  (int)(Math.random() * grid.getCellSize()*2/4) - grid.getCellSize()/4;
+
+        return randomX;
+    }
+
+    public int randomizeY() {
+        int randomY = getY() + (int)(Math.random() * grid.getCellSize()*2/4) - grid.getCellSize()/4 ;
+
+        return randomY;
+    }
+
     public int getX() {
         return col * grid.getCellSize();
     }

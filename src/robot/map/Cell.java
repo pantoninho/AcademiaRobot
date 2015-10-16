@@ -1,21 +1,18 @@
 package robot.map;
 
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 import robot.interfaces.Pickable;
 import robot.objects.GameObject;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Cell {
 
     private Position pos;
     protected Shape cell;
-    private Deque<GameObject> objects;
+    private Queue<GameObject> objects;
     protected int cellSize;
-
 
     public Cell() {
     }
@@ -25,7 +22,7 @@ public class Cell {
         cellSize = pos.getGrid().getCellSize();
 
         createCell();
-        objects = new LinkedList<>();
+        objects = new PriorityQueue<>(10,new ItemSorter());
     }
 
     public void draw() {
@@ -41,9 +38,8 @@ public class Cell {
     }
 
     public void addObject(GameObject object) {
-
         object.createObject(pos);
-        objects.push(object);
+        objects.add(object);
     }
 
     public boolean hasObject() {
@@ -65,36 +61,53 @@ public class Cell {
 
     public Pickable pickObject() {
 
-        Pickable obj = null;
+        GameObject obj = null;
 
         if (hasObject() && getObject() instanceof Pickable) {
-            obj = (Pickable)objects.peek();
-            objects.pop().delete();
+            obj = objects.poll();
+            obj.delete();
         }
-        return obj;
+        return (Pickable)obj;
     }
 
     public void drawObjects() {
 
-        for (GameObject o : objects) {
-            o.draw();
-        }
+        Iterator<GameObject> objIter = objects.iterator();
+
+
+
     }
 
-    public void dropPickable(Pickable obj) {
+    public void dropPickable(Pickable _obj) {
 
-        GameObject thisObj = (GameObject) obj;
-        thisObj.createObject(pos);
-        thisObj.draw();
-        objects.push(thisObj);
+        GameObject obj = (GameObject) _obj;
+        obj.createObject(pos);
+        objects.add(obj);
+
+        drawObjects();
     }
 
     public void createCell() {
 
-        cell = new Rectangle(pos.getX(),pos.getY(),cellSize,cellSize);
-        ((Rectangle) cell).setColor(Color.BLACK);
+        cell = new Picture(pos.getX(),pos.getY(),getRandomImg());
     }
 
+    private String getRandomImg() {
 
+        int randomNr = (int)(3*Math.random());
+        return "resources/grass_" + randomNr + ".png";
+    }
+
+    class ItemSorter implements Comparator<GameObject> {
+
+        @Override
+        public int compare(GameObject o1, GameObject o2) {
+            if(o1.getY() < o2.getY()){
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
 
 }

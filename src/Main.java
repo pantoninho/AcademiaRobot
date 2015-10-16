@@ -11,35 +11,20 @@ public class Main {
 
         Robot jose = new Robot();
 
-
-
-        jose.pickBean();
-        jose.moveForward();
-        jose.moveForward();
-        jose.dropBean();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
         jose.turnLeft();
+        jose.pickJar();
+        jose.moveForward();
+        jose.pickJar();
+        jose.moveForward();
+        jose.dropJar();
+        jose.moveForward();
+        jose.pickJar();
         jose.turnLeft();
         jose.turnLeft();
         jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.turnLeft();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
-        jose.moveForward();
+        jose.dropJar();
+        jose.dropJar();
 
-
+        jose.moveForward();
     }
 }

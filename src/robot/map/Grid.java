@@ -24,7 +24,7 @@ public class Grid {
         cells = new LinkedList<>();
 
         loadMap();
-        drawCells();
+        //drawCells();
         drawObjects();
     }
 
@@ -71,6 +71,7 @@ public class Grid {
             for (int i = 0; i < cols; i++) {
 
                 Cell nextCell = cb.nextCell();
+                nextCell.draw();
                 cells.add(nextCell);
 
                 if ((ch = mapLine.charAt(i)) != ' ') {
@@ -78,6 +79,7 @@ public class Grid {
                         Robot robot = new Robot(new Position(i % cols, rows, this));
                     } else {
                         GameObject obj = new ObjectBuilder()
+                                .setPos(nextCell.getPos())
                                 .setType(ch)
                                 .createObject();
                         nextCell.addObject(obj);

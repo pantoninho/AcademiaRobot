@@ -21,7 +21,7 @@ public class Robot implements Movable {
 
     private Picture model;
     private MovablePosition pos;
-    private Direction direction = Direction.NORTH;
+    private Direction direction = Direction.SOUTH;
 
     private Queue<Actions> moves;
     private int actionCounter;
@@ -31,26 +31,21 @@ public class Robot implements Movable {
     private Text actions;
 
     public Robot() {
-        this(new Position(3, 4, Game.getGrid()));
+        this(new Position(1, 1, Game.getGrid()));
     }
 
     public Robot(Position pos) {
 
-        model = new Picture(pos.getX(),pos.getY(),"resources/robot_NORTH.png");
         makeMovable(pos);
         moves = new LinkedList<>();
-
         pocket = new LinkedList<>();
+        model = new Picture(pos.getX(),pos.getY(),"resources/robot_SOUTH_" + pocket.size() + ".png");
 
-        addText();
-
-
-        resizeImage();
+        //resizeImage();
         model.draw();
+        addText();
         start();
     }
-
-
 
     @Override
     public void makeMovable(Position pos) {
@@ -67,11 +62,11 @@ public class Robot implements Movable {
         moves.add(Actions.MOVE);
     }
 
-    public void pickBean(){
+    public void pickJar(){
         moves.add(Actions.PICK);
     }
 
-    public void dropBean() {
+    public void dropJar() {
         moves.add(Actions.DROP);
     }
 
@@ -98,7 +93,7 @@ public class Robot implements Movable {
             direction = Direction.values()[direction.ordinal()+1];
         }
 
-        model.load("resources/robot_" + direction.toString() + ".png");
+        updateModel();
     }
 
     private void move() {
@@ -143,6 +138,13 @@ public class Robot implements Movable {
     }
 
     private void drop() {
+        actionCounter++;
+
+        if (pocket.isEmpty()) {
+            System.out.println("You've got no jars to drop");
+            return;
+        }
+
         pos.getPos()
                 .getCellOnGrid()
                 .dropPickable(pocket.pop());
@@ -170,15 +172,18 @@ public class Robot implements Movable {
 
 
     }
+
     private void updateText(){
         actions.setText("Number of actions: " + actionCounter + " | Items in pocket: " + pocket.size());
     }
 
+    private void updateModel() {
+        model.load("resources/robot_" + direction.toString() + "_" + pocket.size() + ".png");
+    }
+
     private class MoveLoop extends TimerTask {
 
-        public MoveLoop() {
-
-        }
+        public MoveLoop() {}
 
         @Override
         public void run() {
@@ -192,19 +197,23 @@ public class Robot implements Movable {
             switch (moves.poll()) {
                 case MOVE:
                     move();
+                    updateText();
                     break;
                 case TURN:
                     turn();
+                    updateModel();
                     break;
                 case PICK:
                     pick();
+                    updateText();
+                    updateModel();
                     break;
                 case DROP:
                     drop();
+                    updateText();
+                    updateModel();
                     break;
             }
-
-            updateText();
         }
     }
 }

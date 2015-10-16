@@ -1,6 +1,8 @@
 package robot.objects;
 
 
+import robot.map.Position;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -10,13 +12,19 @@ public class ObjectBuilder {
 
     private String type;
     private Map<Character, String> cellTypes;
+    private Position pos;
 
     public ObjectBuilder() {
         cellTypes = new HashMap<>();
 
         cellTypes.put('#', "robot.objects.Wall");
-        cellTypes.put('*', "robot.objects.Bean");
+        cellTypes.put('*', "robot.objects.Jar");
 
+    }
+
+    public ObjectBuilder setPos(Position pos) {
+        this.pos = pos;
+        return this;
     }
 
     public ObjectBuilder setType(char ch) {
@@ -29,9 +37,9 @@ public class ObjectBuilder {
 
         try {
             objClass = Class.forName(type);
-            Constructor ctor = objClass.getConstructor();
+            Constructor ctor = objClass.getConstructor(Position.class);
 
-            return (GameObject) ctor.newInstance();
+            return (GameObject) ctor.newInstance(pos);
 
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             System.out.println("Wrong class type maybe. Type: " + type);
