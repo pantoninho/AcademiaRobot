@@ -112,17 +112,15 @@ public class Robot implements Movable {
                 break;
         }
 
-        System.out.println("MOVING TO " + pos);
-
         actionCounter++;
         model.translate(pos.dX(), pos.dY());
         pos.update();
     }
 
     private void pick() {
-
         actionCounter++;
-        Cell cell = pos.getGrid().getCell(pos.getPos());
+
+        Cell cell = pos.getPos().getCellOnGrid();
         Pickable obj;
 
         if ( cell.hasObject() &&
@@ -139,8 +137,8 @@ public class Robot implements Movable {
     }
 
     private void drop() {
-        pos.getGrid()
-                .getCell(pos.getPos())
+        pos.getPos()
+                .getCellOnGrid()
                 .dropPickable(pocket.pop());
         model.delete();
         resizeImage();
@@ -149,8 +147,8 @@ public class Robot implements Movable {
 
     private void resizeImage() {
 
-        int xGrowFactor = (pos.getGrid().getCellSize() - model.getWidth())/2;
-        int yGrowFactor = (pos.getGrid().getCellSize() - model.getHeight())/2;
+        int xGrowFactor = (pos.getPos().getGrid().getCellSize() - model.getWidth())/2;
+        int yGrowFactor = (pos.getPos().getGrid().getCellSize() - model.getHeight())/2;
 
         model.grow(xGrowFactor,yGrowFactor);
         model.translate(xGrowFactor, yGrowFactor);

@@ -9,11 +9,9 @@ public class MovablePosition {
 
     private Position pos;
     private Position nextPos;
-    private Grid grid;
 
     public MovablePosition(Position pos) {
         this.pos = pos;
-        this.grid = pos.getGrid();
         nextPos = new Position(pos.getCol(),pos.getRow(),pos.getGrid());
     }
 
@@ -30,7 +28,7 @@ public class MovablePosition {
 
     public void moveDown() {
 
-        if (pos.getRow() < grid.getRows()) {
+        if (pos.getRow() < pos.getGrid().getRows()) {
             nextPos.nextRow();
         } else {
             nextPos.mirrorHoriz();
@@ -52,7 +50,7 @@ public class MovablePosition {
 
     public void moveRight() {
 
-        if (pos.getCol() < grid.getCols()) {
+        if (pos.getCol() < pos.getGrid().getCols()) {
             nextPos.nextCol();
         } else {
             nextPos.mirrorVert();
@@ -82,13 +80,9 @@ public class MovablePosition {
         return pos;
     }
 
-    public Grid getGrid() {
-        return grid;
-    }
-
     private boolean hasWall() {
 
-        Cell nextCell = nextPos.getGrid().getCell(nextPos);
+        Cell nextCell = nextPos.getCellOnGrid();
 
         if (nextCell.hasObject()) {
            if (nextCell.getObject() instanceof Wall)  {
@@ -97,5 +91,13 @@ public class MovablePosition {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MovablePosition{" +
+                "pos=" + pos +
+                ", nextPos=" + nextPos +
+                '}';
     }
 }

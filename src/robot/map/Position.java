@@ -76,6 +76,10 @@ public class Position {
         return grid;
     }
 
+    public Cell getCellOnGrid() {
+        return grid.getCell(this);
+    }
+
     @Override
     public String toString() {
         return "Position{" +
