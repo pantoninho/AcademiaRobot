@@ -25,7 +25,7 @@ public class Grid {
 
         loadMap();
         //drawCells();
-        drawObjects();
+        //drawObjects();
     }
 
     public int getCellSize() {
@@ -66,6 +66,7 @@ public class Grid {
 
         while ((mapLine = Loader.loadLine()) != null) {
 
+            System.out.println(mapLine);
             cols = mapLine.length();
 
             for (int i = 0; i < cols; i++) {
@@ -85,6 +86,7 @@ public class Grid {
                         nextCell.addObject(obj);
                     }
                 }
+
             }
 
             cb.nextRow();

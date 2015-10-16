@@ -8,23 +8,41 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Robot pilas = new Robot();
 
-        Robot jose = new Robot();
+        pilas.turnLeft();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.pickJar();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.moveForward();
+        pilas.pickJar();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.moveForward();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.turnLeft();
+        pilas.moveForward();
+        pilas.dropJar();
+        pilas.dropJar();
 
-        jose.turnLeft();
-        jose.pickJar();
-        jose.moveForward();
-        jose.pickJar();
-        jose.moveForward();
-        jose.dropJar();
-        jose.moveForward();
-        jose.pickJar();
-        jose.turnLeft();
-        jose.turnLeft();
-        jose.moveForward();
-        jose.dropJar();
-        jose.dropJar();
-
-        jose.moveForward();
     }
 }

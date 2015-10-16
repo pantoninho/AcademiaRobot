@@ -40,6 +40,8 @@ public class Cell {
     public void addObject(GameObject object) {
         object.createObject(pos);
         objects.add(object);
+
+        drawObjects();
     }
 
     public boolean hasObject() {
@@ -72,9 +74,11 @@ public class Cell {
 
     public void drawObjects() {
 
-        Iterator<GameObject> objIter = objects.iterator();
-
-
+        for (GameObject o : objects) {
+            System.out.println(o.getY());
+            o.delete();
+            o.draw();
+        }
 
     }
 
