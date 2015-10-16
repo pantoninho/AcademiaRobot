@@ -30,7 +30,7 @@ public class Loader {
 
         try {
             while((line = bReader.readLine()) != null) {
-                result += line;
+                result += line + "\n";
             }
             reader.close();
         } catch (IOException e) {

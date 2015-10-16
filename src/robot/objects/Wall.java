@@ -2,21 +2,24 @@ package robot.objects;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import robot.map.Position;
 
 /**
  * Created by cadet on 15/10/15.
  */
-public class Wall extends Cell {
+public class Wall extends GameObject {
 
 
-    public Wall(Position pos) {
-        super(pos);
+    public Wall() {
     }
 
     @Override
     public void draw() {
-        ((Rectangle) cell).setColor(Color.BLACK);
-        ((Rectangle) cell).fill();
+        ((Rectangle) obj).setColor(Color.BLACK);
+        ((Rectangle) obj).fill();
+    }
+
+    @Override
+    public String toString() {
+        return "IM A WALL";
     }
 }

@@ -5,8 +5,8 @@ package robot.map;
  */
 public class Position {
 
-    protected int col;
-    protected int row;
+    private int col;
+    private int row;
 
     private Grid grid;
 
@@ -33,6 +33,35 @@ public class Position {
 
     public int getRow() {
         return row;
+    }
+
+    void nextCol() {
+        col++;
+    }
+
+    void previousCol() {
+        col--;
+    }
+
+    void nextRow() {
+        row++;
+    }
+
+    void previousRow() {
+        row--;
+    }
+
+    void match(Position pos) {
+        col = pos.col;
+        row = pos.row;
+    }
+
+    void mirrorHoriz() {
+        row = grid.getRows()-1 - row;
+    }
+
+    void mirrorVert(){
+        col = grid.getCols()-1 - col;
     }
 
     public int getX() {

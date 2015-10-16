@@ -1,18 +1,19 @@
-package robot.objects;
+package robot.map;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
-import robot.map.Position;
+import robot.interfaces.Pickable;
+import robot.objects.GameObject;
 
-/**
- * Created by pedroantoninho on 14/10/15.
- */
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class Cell {
 
     private Position pos;
     protected Shape cell;
-    private Cell object = null;
+    private Deque<GameObject> objects;
     protected int cellSize;
 
 
@@ -24,14 +25,11 @@ public class Cell {
         cellSize = pos.getGrid().getCellSize();
 
         createCell();
+        objects = new LinkedList<>();
     }
 
     public void draw() {
         cell.draw();
-
-        if ( hasObject() ) {
-            object.draw();
-        }
     }
 
     public void delete() {
@@ -44,25 +42,39 @@ public class Cell {
 
     public boolean hasObject() {
 
-        if (object != null) {
+        if (objects.size() > 0) {
             return true;
         }
 
         return false;
     }
 
-    public Cell getObject() {
-        return object;
+    public void addObject(GameObject object) {
+
+        object.createObject(pos);
+        objects.push(object);
     }
 
-    public void addObject(Cell object) {
-        this.object = object;
-        object.draw();
+    public GameObject getObject() {
+        if (!hasObject()) {
+            return null;
+        }
+
+        return objects.peek();
     }
 
-    public void removeObject() {
-        object.delete();
-        object = null;
+    public void pickObject() {
+
+        if (hasObject() && getObject() instanceof Pickable) {
+            objects.pop().delete();
+        }
+    }
+
+    public void drawObjects() {
+
+        for (GameObject o : objects) {
+            o.draw();
+        }
     }
 
     public void createCell() {

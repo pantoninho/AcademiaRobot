@@ -1,7 +1,6 @@
 package robot.map;
 
-import robot.interfaces.Pickable;
-import robot.objects.Cell;
+import robot.objects.GameObject;
 import robot.objects.ObjectBuilder;
 
 import java.util.*;
@@ -16,18 +15,16 @@ public class Grid {
     private int cellSize;
 
     private List<Cell> cells;
-    private List<Cell> gameObjects;
 
 
-    public Grid(int width, int height, int cellSize) {
+    public Grid(int cellSize) {
 
-        this.cols = width / cellSize;
-        this.rows = height / cellSize;
         this.cellSize = cellSize;
+        cells = new LinkedList<>();
 
-        createCells();
-        createObjects();
+        loadMap();
         drawCells();
+        drawObjects();
     }
 
     public int getCellSize() {
@@ -42,40 +39,47 @@ public class Grid {
         return rows;
     }
 
+    public Cell getCell(Position pos) {
+
+        System.out.println("POS ASKED " + pos);
+        System.out.println("cols " + cols + "  row " + pos.getRow() + ". col " + pos.getCol());
+        int i = cols * pos.getRow() + pos.getCol();
+        System.out.println("INDEX "+ i);
+        System.out.println("POS GIVEN " + cells.get(i).getPos());
+        return cells.get(i);
+    }
+
     public List<Cell> getCells() {
         return cells;
     }
 
-    private void createCells() {
-
-        cells = new ArrayList<>();
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-
-                Position pos = new Position(c, r, this);
-                cells.add(new Cell(pos));
-            }
-        }
-    }
-
-    private void createObjects() {
-
+    private void loadMap() {
+        char ch;
+        CellBuilder cb = new CellBuilder();
         String loadedMap = Loader.loadMap();
 
-        for (int i = 0; i < loadedMap.length(); i++) {
+        int i;
+        for (i = 0; i < loadedMap.length(); i++) {
 
-            if (loadedMap.charAt(i) != ' ') {
-                Cell object = new ObjectBuilder()
-                        .setPos(cells.get(i).getPos())
-                        .setType(loadedMap.charAt(i))
+            if ((ch = loadedMap.charAt(i)) == '\n') {
+                rows++;
+                cb.nextRow();
+                continue;
+            }
+
+            Cell nextCell = cb.nextCell();
+            cells.add(nextCell);
+
+            if (ch != ' ') {
+                GameObject obj = new ObjectBuilder()
+                        .setType(ch)
                         .createObject();
-
-                cells.get(i).addObject(object);
+                nextCell.addObject(obj);
             }
         }
 
-
+        rows++;
+        cols = (i / rows) + 1;
     }
 
     private void drawCells() {
@@ -85,24 +89,28 @@ public class Grid {
         }
     }
 
-    public Pickable hasPickable(Position pos) {
+    private void drawObjects() {
+        for (Cell c : cells) {
+            c.drawObjects();
+        }
+    }
 
-        Iterator<Cell> cellIter = cells.iterator();
+    private class CellBuilder {
 
-        while (cellIter.hasNext()) {
+        private int col = 0;
+        private int row = 0;
 
-            Cell cell = cellIter.next();
+        private Cell nextCell() {
+            Cell cell = new Cell(new Position(col,row,Grid.this));
+            col++;
 
-            if (pos.equals(cell.getPos())
-                    && cell.hasObject()) {
-
-                if (cell.getObject() instanceof Pickable) {
-                    return (Pickable) cell.getObject();
-                }
-            }
+            return cell;
         }
 
-        System.out.println("There's no bean to pick here!");
-        return null;
+        private void nextRow() {
+            col = 0;
+            row++;
+        }
     }
+
 }

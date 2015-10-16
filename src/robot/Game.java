@@ -7,7 +7,7 @@ import robot.map.Grid;
  */
 public class Game {
 
-    private static Grid grid = new Grid(500,500,60);
+    private static Grid grid = new Grid(60);
 
 
     public static Grid getGrid() {

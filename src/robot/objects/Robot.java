@@ -6,6 +6,7 @@ import robot.enums.Actions;
 import robot.enums.Direction;
 import robot.interfaces.Movable;
 import robot.interfaces.Pickable;
+import robot.map.Cell;
 import robot.map.MovablePosition;
 import robot.map.Position;
 
@@ -14,7 +15,7 @@ import java.util.*;
 /**
  * Created by pedroantoninho on 14/10/15.
  */
-public class Robot extends Cell implements Movable {
+public class Robot implements Movable {
 
     private Picture model;
     private MovablePosition pos;
@@ -27,29 +28,28 @@ public class Robot extends Cell implements Movable {
     private Timer timer;
 
     public Robot() {
-        this(new Position(1, 2, Game.getGrid()));
+        this(new Position(3, 4, Game.getGrid()));
     }
 
     public Robot(Position pos) {
-        super(pos);
-        makeMovable();
+
+        model = new Picture(pos.getX(),pos.getY(),"resources/robot_NORTH.png");
+        makeMovable(pos);
         moves = new LinkedList<>();
 
-        model = (Picture) cell;
-        positionImage();
-        draw();
+        resizeImage();
+        model.draw();
 
         start();
     }
 
     public void pickBean(){
         moves.add(Actions.PICK);
-
     }
 
     @Override
-    public void makeMovable() {
-        pos = new MovablePosition(getPos());
+    public void makeMovable(Position pos) {
+        this.pos = new MovablePosition(pos);
     }
 
     @Override
@@ -106,8 +106,6 @@ public class Robot extends Cell implements Movable {
                 break;
         }
 
-        System.out.println(pos);
-
         actionCounter++;
         model.translate(pos.dX(), pos.dY());
     }
@@ -115,13 +113,14 @@ public class Robot extends Cell implements Movable {
     private void pick() {
 
         actionCounter++;
+        Cell cell = pos.getGrid().getCell(pos);
+        Pickable obj;
 
-        if ( pos.getGrid().hasPickable(pos) != null) {
-
-            Pickable obj = pos.getGrid().hasPickable(pos);
+        if ( cell.hasObject() &&
+                cell.getObject() instanceof Pickable) {
 
             if(beansInPocket < pocketSize){
-                obj.pick();
+                cell.pickObject();
                 beansInPocket++;
             } else {
                 System.out.println("You've got no space to pick another bean");
@@ -129,15 +128,13 @@ public class Robot extends Cell implements Movable {
         }
     }
 
-    private void positionImage() {
-        model.grow( (cellSize - model.getWidth())/2, (cellSize - model.getHeight())/2);
-        model.translate(-model.getX(), -model.getY());
-        model.translate(pos.getCol() * cellSize, pos.getRow() * cellSize);
-    }
+    private void resizeImage() {
 
-    @Override
-    public void createCell() {
-        cell = new Picture(0,0,"resources/robot_NORTH.png");
+        int xGrowFactor = (pos.getGrid().getCellSize() - model.getWidth())/2;
+        int yGrowFactor = (pos.getGrid().getCellSize() - model.getHeight())/2;
+
+        model.grow(xGrowFactor,yGrowFactor);
+        model.translate(xGrowFactor, yGrowFactor);
     }
 
     private class MoveLoop extends TimerTask {
