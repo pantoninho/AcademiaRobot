@@ -83,15 +83,15 @@ public class Cell {
 
     public void dropPickable(Pickable _obj) {
 
-        GameObject obj = (GameObject) _obj;
-
-        if ((obj = pos.getCellOnGrid().getObject()) instanceof Mark) {
-            ((Mark)obj).incJarCounter();
-        }
-
+        GameObject obj = (GameObject)_obj;
 
         obj.createObject(pos);
         objects.add(obj);
+
+        if ((pos.getCellOnGrid().getObject()) instanceof Mark) {
+            ((Mark)pos.getCellOnGrid().getObject()).incJarCounter();
+        }
+
 
         drawObjects();
     }

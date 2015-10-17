@@ -189,7 +189,6 @@ public class Robot implements Movable {
         public void run() {
 
             if (moves.isEmpty()) {
-                System.out.println("still moving");
                 return;
             }
 
