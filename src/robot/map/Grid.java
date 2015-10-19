@@ -1,8 +1,6 @@
 package robot.map;
 
-import robot.objects.GameObject;
-import robot.objects.ObjectBuilder;
-import robot.objects.Robot;
+import robot.objects.*;
 
 import java.util.*;
 
@@ -13,6 +11,7 @@ public class Grid {
 
     private int cols = 0;
     private int rows = 0;
+    private int jarCounter = 0;
     private int cellSize;
 
     private List<Cell> cells;
@@ -24,8 +23,7 @@ public class Grid {
         cells = new LinkedList<>();
 
         loadMap();
-        //drawCells();
-        //drawObjects();
+        countJars();
     }
 
     public int getCellSize() {
@@ -58,6 +56,40 @@ public class Grid {
         return cells;
     }
 
+    private void countJars() {
+
+        for (Cell c : cells) {
+            c.resetObjIterator();
+
+            while (c.objectIterator().hasNext()) {
+                if (c.objectIterator().next() instanceof Jar) {
+                    jarCounter++;
+                }
+            }
+        }
+    }
+
+    public boolean allJarsOnMarks() {
+
+        int jars = 0;
+        GameObject obj = null;
+
+        for (Cell c : cells) {
+            c.resetObjIterator();
+
+            while (c.objectIterator().hasNext()) {
+                if ((obj = c.objectIterator().next()) instanceof Mark) {
+                    jars += ((Mark)obj).getJarCounter();
+                }
+            }
+        }
+
+        if (jars >= jarCounter) {
+            return true;
+        }
+        return false;
+    }
+
     private void loadMap() {
         char ch;
         CellBuilder cb = new CellBuilder();
@@ -71,8 +103,8 @@ public class Grid {
             for (int i = 0; i < cols; i++) {
 
                 Cell nextCell = cb.nextCell();
-                nextCell.draw();
                 cells.add(nextCell);
+                nextCell.draw();
 
                 if ((ch = mapLine.charAt(i)) != '_') {
                     if (ch == 'p') {
@@ -82,28 +114,18 @@ public class Grid {
                                 .setPos(nextCell.getPos())
                                 .setType(ch)
                                 .createObject();
+
                         nextCell.addObject(obj);
                     }
                 }
-
+                nextCell.drawObjects();
             }
 
             cb.nextRow();
             rows++;
         }
-    }
 
-    private void drawCells() {
 
-        for (Cell c : cells) {
-            c.draw();
-        }
-    }
-
-    private void drawObjects() {
-        for (Cell c : cells) {
-            c.drawObjects();
-        }
     }
 
     private class CellBuilder {

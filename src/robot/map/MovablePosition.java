@@ -28,7 +28,7 @@ public class MovablePosition {
 
     public void moveDown() {
 
-        if (pos.getRow() < pos.getGrid().getRows()) {
+        if (pos.getRow() < pos.getGrid().getRows() - 1) {
             nextPos.nextRow();
         } else {
             nextPos.mirrorHoriz();
@@ -50,7 +50,7 @@ public class MovablePosition {
 
     public void moveRight() {
 
-        if (pos.getCol() < pos.getGrid().getCols()) {
+        if (pos.getCol() < pos.getGrid().getCols() - 1) {
             nextPos.nextCol();
         } else {
             nextPos.mirrorVert();
@@ -83,13 +83,13 @@ public class MovablePosition {
     private boolean hasWall() {
 
         Cell nextCell = nextPos.getCellOnGrid();
+        nextCell.resetObjIterator();
 
-        if (nextCell.hasObject()) {
-           if (nextCell.getObject() instanceof Wall)  {
-               return true;
-           }
+        while (nextCell.objectIterator().hasNext()) {
+            if (nextCell.objectIterator().next() instanceof Wall) {
+                return true;
+            }
         }
-
         return false;
     }
 

@@ -1,5 +1,3 @@
-import robot.Game;
-import robot.map.Position;
 import robot.objects.Robot;
 
 /**
@@ -12,27 +10,23 @@ public class Main {
 
         Robot ricardo = new Robot();
 
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.moveForward();
+        ricardo.pickJar();
+        ricardo.turnLeft();
         ricardo.moveForward();
         ricardo.pickJar();
         ricardo.turnLeft();
         ricardo.turnLeft();
+        ricardo.moveForward();
+        ricardo.turnLeft();
+        ricardo.moveForward();
         ricardo.dropJar();
+        ricardo.dropJar();
+        ricardo.turnLeft();
         ricardo.moveForward();
         ricardo.moveForward();
         ricardo.turnLeft();
         ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.turnLeft();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.moveForward();
+
 
     }
 }

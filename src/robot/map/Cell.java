@@ -4,7 +4,6 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 import robot.interfaces.Pickable;
 import robot.objects.GameObject;
-import robot.objects.Mark;
 
 import java.util.*;
 
@@ -12,7 +11,8 @@ public class Cell {
 
     private Position pos;
     protected Shape cell;
-    private Queue<GameObject> objects;
+    private List<GameObject> objects;
+    private Iterator<GameObject> objectIterator;
     protected int cellSize;
 
     public Cell() {
@@ -23,15 +23,8 @@ public class Cell {
         cellSize = pos.getGrid().getCellSize();
 
         createCell();
-        objects = new PriorityQueue<>(10,new ItemSorter());
-    }
-
-    public void draw() {
-        cell.draw();
-    }
-
-    public void delete() {
-        cell.delete();
+        objects = new LinkedList<>();
+        objectIterator = objects.iterator();
     }
 
     public Position getPos() {
@@ -42,63 +35,59 @@ public class Cell {
         object.createObject(pos);
         objects.add(object);
 
-        drawObjects();
+        drawPickables();
     }
 
     public boolean hasObject() {
-
         if (objects.size() > 0) {
             return true;
         }
-
         return false;
     }
 
-    public GameObject getObject() {
-        if (!hasObject()) {
-            return null;
-        }
-
-        return objects.peek();
+    public Iterator<GameObject> objectIterator() {
+        return objectIterator;
     }
 
-    public Pickable pickObject() {
+    public void resetObjIterator() {
+        objectIterator = objects.iterator();
+    }
 
-        GameObject obj = null;
+    public void removeObject (GameObject object) {
+        objects.remove(object);
 
-        if (hasObject() && getObject() instanceof Pickable) {
-            obj = objects.poll();
-            obj.delete();
+        drawPickables();
+    }
+
+    public void drawPickables() {
+
+        Collections.sort(objects,new ItemSorter());
+
+        for (GameObject o : objects) {
+            if (o instanceof Pickable) {
+                o.delete();
+                o.draw();
+            }
         }
-        return (Pickable)obj;
     }
 
     public void drawObjects() {
 
         for (GameObject o : objects) {
-            o.delete();
             o.draw();
         }
     }
 
-    public void dropPickable(Pickable _obj) {
-
-        GameObject obj = (GameObject)_obj;
-
-        obj.createObject(pos);
-        objects.add(obj);
-
-        if ((pos.getCellOnGrid().getObject()) instanceof Mark) {
-            ((Mark)pos.getCellOnGrid().getObject()).incJarCounter();
-        }
-
-
-        drawObjects();
+    public void createCell() {
+        cell = new Picture(pos.getX(),pos.getY(),getRandomImg());
     }
 
-    public void createCell() {
+    public void draw() {
+        cell.draw();
+    }
 
-        cell = new Picture(pos.getX(),pos.getY(),getRandomImg());
+    public void delete() {
+        cell.delete();
     }
 
     private String getRandomImg() {
@@ -113,8 +102,10 @@ public class Cell {
         public int compare(GameObject o1, GameObject o2) {
             if(o1.getY() < o2.getY()){
                 return -1;
-            } else {
+            } else if (o1.getY() > o2.getY()) {
                 return 1;
+            } else {
+                return 0;
             }
         }
     }

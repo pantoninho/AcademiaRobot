@@ -32,8 +32,6 @@ abstract public class GameObject {
         ((Rectangle)obj).setColor(Color.BLACK);
     }
 
-    public void addObj() {}
-
     public void draw() {
         obj.draw();
     }

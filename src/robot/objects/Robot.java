@@ -122,18 +122,20 @@ public class Robot implements Movable {
         actionCounter++;
 
         Cell cell = pos.getPos().getCellOnGrid();
-        Pickable obj;
+        GameObject obj;
 
-        if ( cell.hasObject() &&
-                cell.getObject() instanceof Pickable) {
+        cell.resetObjIterator();
+        while (cell.objectIterator().hasNext()) {
 
-            if(pocket.size() < pocketSize){
-                pocket.push(cell.pickObject());
-            } else {
-                System.out.println("You've got no space to pick another bean");
+            if ((obj = cell.objectIterator().next()) instanceof Pickable) {
+
+                if (pocket.size() < pocketSize) {
+                    pocket.push((Pickable)obj);
+                    ((Pickable)obj).pick(cell);
+                } else {
+                    System.out.println("You've got no space to pick another jar.");
+                }
             }
-        } else {
-            System.out.println("There isn't a pickable object in this cell");
         }
     }
 
@@ -145,9 +147,9 @@ public class Robot implements Movable {
             return;
         }
 
-        pos.getPos()
-                .getCellOnGrid()
-                .dropPickable(pocket.pop());
+        pocket.pop().drop(pos.getPos().getCellOnGrid());
+
+
         model.delete();
         resizeImage();
         model.draw();
@@ -213,12 +215,9 @@ public class Robot implements Movable {
                     updateText();
                     updateModel();
 
-                    if (pos.getPos().getCellOnGrid().getObject() instanceof Mark) {
-
-                        if (((Mark) pos.getPos().getCellOnGrid().getObject()).getJarCounter() == 3) {
-                            timer.cancel();
-                            System.out.println("GAME OVER. YOU WIN");
-                        }
+                    if (pos.getPos().getGrid().allJarsOnMarks()) {
+                        System.out.println("DONE");
+                        timer.cancel();
                     }
                     break;
             }

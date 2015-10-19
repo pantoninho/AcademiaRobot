@@ -8,7 +8,7 @@ import robot.map.Position;
  */
 public class Mark extends GameObject {
 
-    private int jarCounter;
+    private int jarCounter = 0;
 
     public Mark() {
     }
