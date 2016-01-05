@@ -21,7 +21,7 @@ public class Mark extends GameObject {
     public void incJarCounter() {
         jarCounter++;
 
-        System.out.println(jarCounter);
+        System.out.println(jarCounter + " jars in target");
     }
 
     public int getJarCounter() {

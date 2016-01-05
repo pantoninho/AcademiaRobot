@@ -8,24 +8,30 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Robot ricardo = new Robot();
+        Robot yourName = new Robot();
 
-        ricardo.pickJar();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.pickJar();
-        ricardo.turnLeft();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.dropJar();
-        ricardo.dropJar();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.turnLeft();
-        ricardo.moveForward();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.moveForward();
+        yourName.moveForward();
+        yourName.pickJar();
+        yourName.turnLeft();
+        yourName.moveForward();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.moveForward();
+        yourName.pickJar();
+        yourName.moveForward();
+        yourName.moveForward();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.turnLeft();
+        yourName.moveForward();
+        yourName.moveForward();
+        yourName.dropJar();
+        yourName.dropJar();
 
 
     }

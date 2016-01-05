@@ -13,6 +13,7 @@ public class Grid {
     private int rows = 0;
     private int jarCounter = 0;
     private int cellSize;
+    private Position robotPosition;
 
     private List<Cell> cells;
 
@@ -24,6 +25,10 @@ public class Grid {
 
         loadMap();
         countJars();
+    }
+
+    public Position getRobotPosition() {
+        return robotPosition;
     }
 
     public int getCellSize() {
@@ -107,8 +112,9 @@ public class Grid {
                 nextCell.draw();
 
                 if ((ch = mapLine.charAt(i)) != '_') {
-                    if (ch == 'p') {
-                        Robot robot = new Robot(new Position(i % cols, rows, this));
+                    if (ch == 'r') {
+                        robotPosition = new Position(i % cols, rows, this);
+                        //Robot robot = new Robot(new Position(i % cols, rows, this));
                     } else {
                         GameObject obj = new ObjectBuilder()
                                 .setPos(nextCell.getPos())
