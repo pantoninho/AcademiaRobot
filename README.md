@@ -12,6 +12,6 @@ To make a custom map (or change the robot initial position), go to resources/map
 
 r     robot
 _     grass
-#     wall
-*     jar
+/#     wall
+/*     jar
 x     destination target
