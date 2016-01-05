@@ -13,3 +13,8 @@ To make a custom map (or change the robot initial position), go to resources/map
 * # = wall
 * * = jar
 * x = destination target
+
+
+
+
+Made by Pedro Antoninho, Daniel Francisco, Ricardo Afonso and Lopo Vieira
