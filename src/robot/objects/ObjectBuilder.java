@@ -29,7 +29,12 @@ public class ObjectBuilder {
     }
 
     public ObjectBuilder setType(char ch) {
-        type = cellTypes.get(ch);
+
+        if (cellTypes.get(ch) == null) {
+            type = null;
+        } else {
+            type = cellTypes.get(ch);
+        }
         return this;
     }
 

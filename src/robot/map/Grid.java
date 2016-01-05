@@ -77,7 +77,7 @@ public class Grid {
     public boolean allJarsOnMarks() {
 
         int jars = 0;
-        GameObject obj = null;
+        GameObject obj;
 
         for (Cell c : cells) {
             c.resetObjIterator();
@@ -113,15 +113,23 @@ public class Grid {
 
                 if ((ch = mapLine.charAt(i)) != '_') {
                     if (ch == 'r') {
-                        robotPosition = new Position(i % cols, rows, this);
-                        //Robot robot = new Robot(new Position(i % cols, rows, this));
+                        if (robotPosition != null) {
+                            System.out.println("You may only create one robot. A robot was discarded");
+                        } else {
+                            robotPosition = new Position(i % cols, rows, this);
+                        }
                     } else {
-                        GameObject obj = new ObjectBuilder()
-                                .setPos(nextCell.getPos())
-                                .setType(ch)
-                                .createObject();
 
-                        nextCell.addObject(obj);
+                        try {
+                            GameObject obj = new ObjectBuilder()
+                                    .setPos(nextCell.getPos())
+                                    .setType(ch)
+                                    .createObject();
+                            nextCell.addObject(obj);
+                        } catch(Exception e) {
+                            System.out.println("No object found for this symbol -> " + ch + ". Discarded");
+                        }
+
                     }
                 }
                 nextCell.drawObjects();

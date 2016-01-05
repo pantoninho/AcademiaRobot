@@ -41,7 +41,6 @@ public class Robot implements Movable {
         pocket = new LinkedList<>();
         model = new Picture(pos.getX(),pos.getY(),"resources/robot_SOUTH_" + pocket.size() + ".png");
 
-        //resizeImage();
         model.draw();
         addText();
         start();

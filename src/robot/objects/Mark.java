@@ -29,7 +29,6 @@ public class Mark extends GameObject {
     }
 
 
-
     @Override
     public void createObject(Position pos) {
         obj = new Picture(x,y,"resources/mark.png");
