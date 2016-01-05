@@ -31,7 +31,6 @@ public class Jar extends GameObject implements Pickable {
     @Override
     public void drop(Cell cell) {
 
-        System.out.println("HERE");
         cell.resetObjIterator();
 
         while(cell.objectIterator().hasNext()) {

@@ -10,22 +10,28 @@ public class Main {
 
         Robot ricardo = new Robot();
 
+        ricardo.turnLeft();
+        ricardo.turnLeft();
+        ricardo.turnLeft();
+        ricardo.moveForward();
+        ricardo.moveForward();
         ricardo.pickJar();
         ricardo.turnLeft();
         ricardo.moveForward();
+        ricardo.turnLeft();
+        ricardo.turnLeft();
+        ricardo.turnLeft();
+        ricardo.moveForward();
         ricardo.pickJar();
+        ricardo.moveForward();
+        ricardo.moveForward();
+        ricardo.turnLeft();
         ricardo.turnLeft();
         ricardo.turnLeft();
         ricardo.moveForward();
-        ricardo.turnLeft();
         ricardo.moveForward();
         ricardo.dropJar();
         ricardo.dropJar();
-        ricardo.turnLeft();
-        ricardo.moveForward();
-        ricardo.moveForward();
-        ricardo.turnLeft();
-        ricardo.moveForward();
 
 
     }

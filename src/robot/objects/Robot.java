@@ -31,7 +31,7 @@ public class Robot implements Movable {
     private Text actions;
 
     public Robot() {
-        this(new Position(1, 1, Game.getGrid()));
+        this(Game.getGrid().getRobotPosition());
     }
 
     public Robot(Position pos) {
@@ -72,8 +72,7 @@ public class Robot implements Movable {
 
     private void start()  {
 
-        //WATCH OUT OMG. WORKAROUND HACK MUDAR DEPOIS CUIDADO!!!one!1
-        //MUDAR PARA MULTITHREAD DPS
+        //WORKAROUND
 
         try {
             Thread.sleep(2000);
