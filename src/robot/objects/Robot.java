@@ -47,8 +47,7 @@ public class Robot implements Movable {
         start();
     }
 
-    @Override
-    public void makeMovable(Position pos) {
+    private void makeMovable(Position pos) {
         this.pos = new MovablePosition(pos);
     }
 
